@@ -7,13 +7,14 @@ import pool from "./config/mysql.js"; // Import MySQL connection
 const app = express();
 const port = process.env.PORT || 4000;
 const allowedOrigin = [
-  "https://cheerful-croquembouche-c05303.netlify.app",
-  "http://localhost:5173",
-  "http://65.2.112.209",
-  "http://65.2.112.209:5173",
-  "http://localhost:4000",
-  "https://app.netlify.com",
-  "http://65.2.112.209:4000/",
+  // "https://cheerful-croquembouche-c05303.netlify.app",
+  // "http://localhost:5173",
+  // "http://65.2.112.209",
+  // "http://65.2.112.209:5173",
+  // "http://localhost:4000",
+  // "https://app.netlify.com",
+  // "http://65.2.112.209:4000/",
+  "*"
 ];
 
 app.use(express.json());

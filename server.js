@@ -7,37 +7,29 @@ import pool from "./config/mysql.js"; // Import MySQL connection
 const app = express();
 const port = process.env.PORT || 4000;
 const allowedOrigin = [
-  // "https://cheerful-croquembouche-c05303.netlify.app",
-  // "http://localhost:5173",
-  // "http://65.2.112.209",
-  // "http://65.2.112.209:5173",
-  // "http://localhost:4000",
-  // "https://app.netlify.com",
-  // "http://65.2.112.209:4000/",
-  "*"
+   "https://sena-client.vercel.app",
+  "http://localhost:5173"
 ];
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-  cors({
-     origin: (origin, callback) => {
-      const allowedOrigins = [
-        "https://sena-client.vercel.app/", 
-        "http://localhost:5173",
-      ];
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, origin);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-  })
-);
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], 
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+};
 
+app.use(cors(corsOptions));
+
+// Handle OPTIONS requests
+app.options("*", cors(corsOptions)); 
 // Test MySQL connection on server start
 (async () => {
   try {

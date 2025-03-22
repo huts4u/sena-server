@@ -21,10 +21,20 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-     origin: "*", 
+     origin: (origin, callback) => {
+      const allowedOrigins = [
+        "https://sena-client.vercel.app/", 
+        "http://localhost:5173",
+      ];
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, origin);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    // credentials: true,
+    credentials: true,
   })
 );
 
